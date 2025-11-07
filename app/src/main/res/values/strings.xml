@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BattleWithBytes Launcher</string>
+    <string name="widget_battery">Battery</string>
+    <string name="widget_motor">Motor Info</string>
+    <string name="widget_media">Media</string>
+    <string name="widget_maps">Maps</string>
+    <string name="can_service_notification_title">CAN Bus Service</string>
+    <string name="can_service_notification_text">Monitoring vehicle systems</string>
+</resources>

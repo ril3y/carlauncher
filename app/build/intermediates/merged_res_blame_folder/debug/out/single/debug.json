@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "io.battlewithbytes.carlauncher.app-merged_res-62:/drawable_gcart.png.flat",
+        "source": "io.battlewithbytes.carlauncher.app-main-64:/drawable/gcart.png"
+    },
+    {
+        "merged": "io.battlewithbytes.carlauncher.app-merged_res-62:/xml_backup_rules.xml.flat",
+        "source": "io.battlewithbytes.carlauncher.app-main-64:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "io.battlewithbytes.carlauncher.app-merged_res-62:/xml_data_extraction_rules.xml.flat",
+        "source": "io.battlewithbytes.carlauncher.app-main-64:/xml/data_extraction_rules.xml"
+    }
+]

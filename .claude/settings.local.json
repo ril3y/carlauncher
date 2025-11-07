@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"C:\\Users\\riley\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe\" -s 192.168.1.119:5555 install -r \"X:\\projects\\android\\carlauncher\\app\\build\\outputs\\apk\\debug\\app-debug.apk\")",
+      "Bash(\"C:\\Users\\riley\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe\" -s 192.168.1.119:5555 exec-out screencap -p)",
+      "Bash(\"X:\\projects\\android\\carlauncher\\screenshots\\screenshot_fullscreen_test.png\")",
+      "WebFetch(domain:manuals.plus)",
+      "Bash(\"X:\\projects\\android\\carlauncher\\screenshots\\screenshot_with_cart_and_menu.png\")",
+      "Bash(\"X:\\projects\\android\\carlauncher\\screenshots\\screenshot_final_layout.png\")",
+      "Bash(\"X:\\projects\\android\\carlauncher\\screenshots\\screenshot_clean_map.png\")",
+      "Bash(\"X:\\projects\\android\\carlauncher\\screenshots\\screenshot_right_media_bar.png\")",
+      "Bash(\"X:\\projects\\android\\carlauncher\\screenshots\\screenshot_final_sidebar_top.png\")",
+      "Bash(\"X:\\projects\\android\\carlauncher\\screenshots\\screenshot_darker_map.png\")",
+      "Bash(\"X:\\projects\\android\\carlauncher\\screenshots\\screenshot_no_duplicates.png\")",
+      "Bash(\"X:\\projects\\android\\carlauncher\\screenshots\\screenshot_media_overlay.png\")",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

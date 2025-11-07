@@ -1,0 +1,251 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="io.battlewithbytes.carlauncher"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="33"
+9        android:targetSdkVersion="33" />
+10
+11    <!-- Permissions for CAN communication and media -->
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:6:5-67
+12-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:6:22-64
+13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+13-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:7:5-79
+13-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:7:22-76
+14    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+14-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:8:5-79
+14-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:8:22-76
+15    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+15-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:9:5-81
+15-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:9:22-78
+16    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+16-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:10:5-75
+16-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:10:22-72
+17    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+17-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:11:5-77
+17-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:11:22-74
+18    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+18-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:12:5-87
+18-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:12:22-84
+19
+20    <!-- Map tile caching -->
+21    <uses-permission
+21-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:15:5-16:38
+22        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+22-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:15:22-78
+23        android:maxSdkVersion="32" />
+23-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:16:9-35
+24    <uses-permission
+24-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:17:5-18:38
+25        android:name="android.permission.READ_EXTERNAL_STORAGE"
+25-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:17:22-77
+26        android:maxSdkVersion="32" />
+26-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:18:9-35
+27
+28    <permission
+28-->[androidx.core:core:1.12.0] C:\Users\riley\.gradle\caches\transforms-3\2ccd268e0ca2e1cd10ec650ac8067a3e\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+29        android:name="io.battlewithbytes.carlauncher.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+29-->[androidx.core:core:1.12.0] C:\Users\riley\.gradle\caches\transforms-3\2ccd268e0ca2e1cd10ec650ac8067a3e\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+30        android:protectionLevel="signature" />
+30-->[androidx.core:core:1.12.0] C:\Users\riley\.gradle\caches\transforms-3\2ccd268e0ca2e1cd10ec650ac8067a3e\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+31
+32    <uses-permission android:name="io.battlewithbytes.carlauncher.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+32-->[androidx.core:core:1.12.0] C:\Users\riley\.gradle\caches\transforms-3\2ccd268e0ca2e1cd10ec650ac8067a3e\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+32-->[androidx.core:core:1.12.0] C:\Users\riley\.gradle\caches\transforms-3\2ccd268e0ca2e1cd10ec650ac8067a3e\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+33
+34    <supports-screens
+34-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:9:5-12:40
+35        android:anyDensity="true"
+35-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:10:9-34
+36        android:largeScreens="true"
+36-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:11:9-36
+37        android:normalScreens="true" />
+37-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:12:9-37
+38
+39    <uses-feature
+39-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:14:5-16:36
+40        android:name="android.hardware.location.network"
+40-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:15:9-57
+41        android:required="false" />
+41-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:16:9-33
+42    <uses-feature
+42-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:17:5-19:36
+43        android:name="android.hardware.location.gps"
+43-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:18:9-53
+44        android:required="false" />
+44-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:19:9-33
+45    <uses-feature
+45-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:20:5-22:36
+46        android:name="android.hardware.telephony"
+46-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:21:9-50
+47        android:required="false" />
+47-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:22:9-33
+48    <uses-feature
+48-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:23:5-25:36
+49        android:name="android.hardware.wifi"
+49-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:24:9-45
+50        android:required="false" />
+50-->[org.osmdroid:osmdroid-android:6.1.18] C:\Users\riley\.gradle\caches\transforms-3\41374692f5545c453534938eaec5892b\transformed\osmdroid-android-6.1.18\AndroidManifest.xml:25:9-33
+51
+52    <application
+52-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:20:5-51:19
+53        android:allowBackup="true"
+53-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:21:9-35
+54        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+54-->[androidx.core:core:1.12.0] C:\Users\riley\.gradle\caches\transforms-3\2ccd268e0ca2e1cd10ec650ac8067a3e\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+55        android:dataExtractionRules="@xml/data_extraction_rules"
+55-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:22:9-65
+56        android:debuggable="true"
+57        android:extractNativeLibs="false"
+58        android:fullBackupContent="@xml/backup_rules"
+58-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:23:9-54
+59        android:label="@string/app_name"
+59-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:24:9-41
+60        android:supportsRtl="true"
+60-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:25:9-35
+61        android:theme="@style/Theme.BattleWithBytesCarLauncher" >
+61-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:26:9-64
+62
+63        <!-- Main launcher activity -->
+64        <activity
+64-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:30:9-42:20
+65            android:name="io.battlewithbytes.carlauncher.MainActivity"
+65-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:31:13-41
+66            android:exported="true"
+66-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:32:13-36
+67            android:launchMode="singleTask"
+67-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:34:13-44
+68            android:stateNotNeeded="true"
+68-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:35:13-42
+69            android:theme="@style/Theme.BattleWithBytesCarLauncher" >
+69-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:33:13-68
+70            <intent-filter>
+70-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:36:13-41:29
+71                <action android:name="android.intent.action.MAIN" />
+71-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:37:17-69
+71-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:37:25-66
+72
+73                <category android:name="android.intent.category.LAUNCHER" />
+73-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:38:17-77
+73-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:38:27-74
+74                <category android:name="android.intent.category.HOME" />
+74-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:39:17-73
+74-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:39:27-70
+75                <category android:name="android.intent.category.DEFAULT" />
+75-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:40:17-76
+75-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:40:27-73
+76            </intent-filter>
+77        </activity>
+78
+79        <!-- CAN Bus Service -->
+80        <service
+80-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:45:9-49:56
+81            android:name="io.battlewithbytes.carlauncher.service.CanBusService"
+81-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:46:13-50
+82            android:enabled="true"
+82-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:47:13-35
+83            android:exported="false"
+83-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:48:13-37
+84            android:foregroundServiceType="dataSync" />
+84-->X:\Projects\android\carlauncher\app\src\main\AndroidManifest.xml:49:13-53
+85
+86        <activity
+86-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\riley\.gradle\caches\transforms-3\a07423590cddbae4afa1a8ffe54409e1\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+87            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+87-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\riley\.gradle\caches\transforms-3\a07423590cddbae4afa1a8ffe54409e1\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+88            android:exported="false"
+88-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\riley\.gradle\caches\transforms-3\a07423590cddbae4afa1a8ffe54409e1\transformed\play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+89            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+89-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\riley\.gradle\caches\transforms-3\a07423590cddbae4afa1a8ffe54409e1\transformed\play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+90
+91        <meta-data
+91-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\riley\.gradle\caches\transforms-3\d83dac885cb6847a1d0c23c51a2a758d\transformed\play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+92            android:name="com.google.android.gms.version"
+92-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\riley\.gradle\caches\transforms-3\d83dac885cb6847a1d0c23c51a2a758d\transformed\play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+93            android:value="@integer/google_play_services_version" />
+93-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\riley\.gradle\caches\transforms-3\d83dac885cb6847a1d0c23c51a2a758d\transformed\play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+94
+95        <activity
+95-->[androidx.compose.ui:ui-test-manifest:1.6.0] C:\Users\riley\.gradle\caches\transforms-3\d4dcbb96756183295ee033686b0b70fc\transformed\ui-test-manifest-1.6.0\AndroidManifest.xml:23:9-25:39
+96            android:name="androidx.activity.ComponentActivity"
+96-->[androidx.compose.ui:ui-test-manifest:1.6.0] C:\Users\riley\.gradle\caches\transforms-3\d4dcbb96756183295ee033686b0b70fc\transformed\ui-test-manifest-1.6.0\AndroidManifest.xml:24:13-63
+97            android:exported="true" />
+97-->[androidx.compose.ui:ui-test-manifest:1.6.0] C:\Users\riley\.gradle\caches\transforms-3\d4dcbb96756183295ee033686b0b70fc\transformed\ui-test-manifest-1.6.0\AndroidManifest.xml:25:13-36
+98        <activity
+98-->[androidx.compose.ui:ui-tooling-android:1.6.0] C:\Users\riley\.gradle\caches\transforms-3\85a6ae6b5a27d8be50578031b259102e\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
+99            android:name="androidx.compose.ui.tooling.PreviewActivity"
+99-->[androidx.compose.ui:ui-tooling-android:1.6.0] C:\Users\riley\.gradle\caches\transforms-3\85a6ae6b5a27d8be50578031b259102e\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
+100            android:exported="true" />
+100-->[androidx.compose.ui:ui-tooling-android:1.6.0] C:\Users\riley\.gradle\caches\transforms-3\85a6ae6b5a27d8be50578031b259102e\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
+101
+102        <provider
+102-->[androidx.emoji2:emoji2:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\1013ef46c93a36dde6dd37cde80d0559\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+103            android:name="androidx.startup.InitializationProvider"
+103-->[androidx.emoji2:emoji2:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\1013ef46c93a36dde6dd37cde80d0559\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+104            android:authorities="io.battlewithbytes.carlauncher.androidx-startup"
+104-->[androidx.emoji2:emoji2:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\1013ef46c93a36dde6dd37cde80d0559\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+105            android:exported="false" >
+105-->[androidx.emoji2:emoji2:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\1013ef46c93a36dde6dd37cde80d0559\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+106            <meta-data
+106-->[androidx.emoji2:emoji2:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\1013ef46c93a36dde6dd37cde80d0559\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+107                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+107-->[androidx.emoji2:emoji2:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\1013ef46c93a36dde6dd37cde80d0559\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+108                android:value="androidx.startup" />
+108-->[androidx.emoji2:emoji2:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\1013ef46c93a36dde6dd37cde80d0559\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+109            <meta-data
+109-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\riley\.gradle\caches\transforms-3\b8d11ad8426ba34454d5792641948162\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+110                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+110-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\riley\.gradle\caches\transforms-3\b8d11ad8426ba34454d5792641948162\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+111                android:value="androidx.startup" />
+111-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\riley\.gradle\caches\transforms-3\b8d11ad8426ba34454d5792641948162\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+112            <meta-data
+112-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+113                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+113-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+114                android:value="androidx.startup" />
+114-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+115        </provider>
+116
+117        <receiver
+117-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+118            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+118-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+119            android:directBootAware="false"
+119-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+120            android:enabled="true"
+120-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+121            android:exported="true"
+121-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+122            android:permission="android.permission.DUMP" >
+122-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+123            <intent-filter>
+123-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+124                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+124-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+124-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+125            </intent-filter>
+126            <intent-filter>
+126-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+127                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+127-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+127-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+128            </intent-filter>
+129            <intent-filter>
+129-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+130                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+130-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+130-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+131            </intent-filter>
+132            <intent-filter>
+132-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+133                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+133-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+133-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\riley\.gradle\caches\transforms-3\90a5c045bb237d34bfde7528c354fcd3\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+134            </intent-filter>
+135        </receiver>
+136    </application>
+137
+138</manifest>
