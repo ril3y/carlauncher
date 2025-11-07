@@ -6,6 +6,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -23,11 +25,17 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.battlewithbytes.carlauncher.R
+import io.battlewithbytes.carlauncher.viewmodel.MediaPlayerViewModel
+import io.battlewithbytes.carlauncher.viewmodel.MediaPlayerViewModelFactory
 import io.battlewithbytes.carlauncher.viewmodel.VehicleDataViewModel
 import kotlin.math.roundToInt
 
@@ -36,14 +44,21 @@ import kotlin.math.roundToInt
  */
 @Composable
 fun UnifiedTeslaView(
-    vehicleDataViewModel: VehicleDataViewModel = viewModel()
+    vehicleDataViewModel: VehicleDataViewModel = viewModel(),
+    mediaPlayerViewModel: MediaPlayerViewModel? = null
 ) {
+    val context = LocalContext.current
+    val actualMediaPlayerViewModel: MediaPlayerViewModel = mediaPlayerViewModel ?: viewModel(
+        factory = MediaPlayerViewModelFactory(context)
+    )
+
     val batteryData by vehicleDataViewModel.batteryData.collectAsState()
     val motorData by vehicleDataViewModel.motorData.collectAsState()
     val vehicleStatus by vehicleDataViewModel.vehicleStatus.collectAsState()
 
     var showSettings by remember { mutableStateOf(false) }
     var showMedia by remember { mutableStateOf(false) }
+    var showMediaBar by remember { mutableStateOf(true) }
 
     Box(
         modifier = Modifier
@@ -97,18 +112,17 @@ fun UnifiedTeslaView(
                         )
 
                         // Media overlay (lower z-index)
-                        if (showMedia) {
-                            MediaPlayerWidget(
-                                onDismiss = { showMedia = false }
-                            )
-                        }
+                        MediaPlayerWidget(
+                            viewModel = actualMediaPlayerViewModel,
+                            onDismiss = { showMedia = false },
+                            visible = showMedia
+                        )
 
                         // Settings overlay (higher z-index - appears on top)
-                        if (showSettings) {
-                            SettingsScreen(
-                                onDismiss = { showSettings = false }
-                            )
-                        }
+                        SettingsScreen(
+                            onDismiss = { showSettings = false },
+                            visible = showSettings
+                        )
                     }
                 }
             }
@@ -121,15 +135,18 @@ fun UnifiedTeslaView(
                 onControlsClick = { showSettings = true },
                 onCarIconClick = { showSettings = !showSettings },
                 onMediaClick = { showMedia = !showMedia },
+                onMediaSwipeUp = { showMediaBar = true },
                 modifier = Modifier.fillMaxWidth()
             )
         }
 
         // Media bar overlay - positioned on right side above bottom bar with gap
-        // Hide when media player overlay is open
-        if (!showMedia) {
+        // Hide when media player overlay is open OR settings overlay is open OR when manually hidden by user
+        if (!showMedia && !showSettings && showMediaBar) {
             MediaBar(
+                viewModel = actualMediaPlayerViewModel,
                 onClick = { showMedia = !showMedia },
+                onHide = { showMediaBar = false },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
                     .padding(bottom = 80.dp, end = 16.dp) // Raised higher to show map gap
@@ -450,37 +467,48 @@ fun MetricRow(label: String, value: String) {
 
 @Composable
 fun MediaBar(
+    viewModel: MediaPlayerViewModel,
     onClick: () -> Unit,
+    onHide: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // Swipeable media bar overlay - positioned on right side
-    var isExpanded by remember { mutableStateOf(true) }
-    var offsetY by remember { mutableStateOf(0f) }
+    val playbackState by viewModel.playbackState.collectAsState()
 
-    if (isExpanded) {
-        Surface(
-            modifier = modifier
-                .widthIn(min = 400.dp, max = 600.dp)
-                .offset { IntOffset(0, offsetY.roundToInt()) }
-                .clickable { onClick() } // Click to open media overlay
-                .pointerInput(Unit) {
-                    detectHorizontalDragGestures(
-                        onDragEnd = {
-                            if (offsetY > 100f) {
-                                isExpanded = false
-                            } else {
-                                offsetY = 0f
-                            }
-                        },
-                        onHorizontalDrag = { _, dragAmount ->
-                            offsetY = (offsetY + dragAmount).coerceAtLeast(0f)
+    // Swipeable media bar overlay - positioned on right side
+    var offsetY by remember { mutableStateOf(0f) }
+    val swipeThreshold = 80f // Downward swipe threshold in pixels
+
+    Surface(
+        modifier = modifier
+            .widthIn(min = 400.dp, max = 600.dp)
+            .offset { IntOffset(0, offsetY.roundToInt()) }
+            .pointerInput(Unit) {
+                detectVerticalDragGestures(
+                    onDragEnd = {
+                        if (offsetY > swipeThreshold) {
+                            // User swiped down past threshold - hide the bar
+                            onHide()
+                        } else {
+                            // Snap back to original position
+                            offsetY = 0f
                         }
-                    )
-                },
-            color = Color(0xFF1A1A1A),
-            tonalElevation = 8.dp,
-            shape = RectangleShape // No rounded edges
-        ) {
+                    },
+                    onVerticalDrag = { _, dragAmount ->
+                        // Only allow downward dragging (positive values)
+                        offsetY = (offsetY + dragAmount).coerceAtLeast(0f)
+                    }
+                )
+            }
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onTap = { onClick() } // Click to open media overlay
+                )
+            },
+        color = Color(0xFF1A1A1A),
+        tonalElevation = 8.dp,
+        shape = RectangleShape // No rounded edges
+    ) {
+        Column {
             Row(
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -493,19 +521,28 @@ fun MediaBar(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)
                 ) {
-                    // Album art placeholder
+                    // Album art
                     Box(
                         modifier = Modifier
                             .size(48.dp)
                             .background(Color(0xFF2A2A2A), MaterialTheme.shapes.small),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.MusicNote,
-                            contentDescription = null,
-                            tint = Color(0xFF606060),
-                            modifier = Modifier.size(24.dp)
-                        )
+                        if (playbackState.albumArt != null) {
+                            Image(
+                                bitmap = playbackState.albumArt!!.asImageBitmap(),
+                                contentDescription = "Album Art",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.MusicNote,
+                                contentDescription = null,
+                                tint = Color(0xFF606060),
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                     }
 
                     // Song title & artist
@@ -513,15 +550,23 @@ fun MediaBar(
                         verticalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
                         Text(
-                            text = "No media playing",
+                            text = playbackState.trackTitle,
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.White,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Text(
-                            text = "Connect Bluetooth or USB",
+                            text = if (playbackState.hasActiveSession) {
+                                playbackState.artistName
+                            } else {
+                                "Connect Bluetooth or USB"
+                            },
                             style = MaterialTheme.typography.bodySmall,
-                            color = Color(0xFF808080)
+                            color = Color(0xFF808080),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
@@ -531,7 +576,7 @@ fun MediaBar(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(onClick = { /* Previous */ }) {
+                    IconButton(onClick = { viewModel.skipToPrevious() }) {
                         Icon(
                             imageVector = Icons.Default.SkipPrevious,
                             contentDescription = "Previous",
@@ -539,15 +584,19 @@ fun MediaBar(
                             modifier = Modifier.size(28.dp)
                         )
                     }
-                    IconButton(onClick = { /* Play/Pause */ }) {
+                    IconButton(onClick = { viewModel.togglePlayPause() }) {
                         Icon(
-                            imageVector = Icons.Default.PlayArrow,
-                            contentDescription = "Play",
+                            imageVector = if (playbackState.isPlaying) {
+                                Icons.Default.Pause
+                            } else {
+                                Icons.Default.PlayArrow
+                            },
+                            contentDescription = if (playbackState.isPlaying) "Pause" else "Play",
                             tint = Color.White,
                             modifier = Modifier.size(32.dp)
                         )
                     }
-                    IconButton(onClick = { /* Next */ }) {
+                    IconButton(onClick = { viewModel.skipToNext() }) {
                         Icon(
                             imageVector = Icons.Default.SkipNext,
                             contentDescription = "Next",
@@ -557,14 +606,26 @@ fun MediaBar(
                     }
                 }
 
-                // Close button
-                IconButton(onClick = { isExpanded = false }) {
-                    Icon(
-                        imageVector = Icons.Default.KeyboardArrowDown,
-                        contentDescription = "Hide media bar",
-                        tint = Color(0xFF808080)
-                    )
-                }
+                // Visual hint for swipe-down gesture
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = "Swipe down to hide",
+                    tint = Color(0xFF606060),
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            // Progress bar - thin bar showing playback progress
+            if (playbackState.hasActiveSession && playbackState.duration > 0) {
+                val progress = (playbackState.position.toFloat() / playbackState.duration.toFloat()).coerceIn(0f, 1f)
+                LinearProgressIndicator(
+                    progress = progress,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(3.dp),
+                    color = Color.White,
+                    trackColor = Color(0xFF2A2A2A)
+                )
             }
         }
     }
@@ -578,6 +639,7 @@ fun BottomStatusBar(
     onControlsClick: () -> Unit,
     onCarIconClick: () -> Unit,
     onMediaClick: () -> Unit,
+    onMediaSwipeUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -604,7 +666,12 @@ fun BottomStatusBar(
                 BottomIconButton(Icons.Default.AcUnit, "Climate", onClick = {})
                 BottomIconButton(Icons.Default.BatteryChargingFull, "Charging", onClick = {})
                 BottomIconButton(Icons.Default.Settings, "Controls", onClick = onControlsClick)
-                BottomIconButton(Icons.Default.Headphones, "Media", onClick = onMediaClick)
+                BottomIconButton(
+                    icon = Icons.Default.Headphones,
+                    label = "Media",
+                    onClick = onMediaClick,
+                    onSwipeUp = onMediaSwipeUp
+                )
             }
 
             // Right: Spacer for balance
@@ -617,12 +684,43 @@ fun BottomStatusBar(
 fun BottomIconButton(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onSwipeUp: (() -> Unit)? = null
 ) {
+    var offsetY by remember { mutableStateOf(0f) }
+    val swipeThreshold = 50f // Upward swipe threshold in pixels
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = Modifier.clickable { onClick() }
+        modifier = Modifier
+            .offset { IntOffset(0, offsetY.roundToInt()) }
+            .then(
+                if (onSwipeUp != null) {
+                    Modifier.pointerInput(Unit) {
+                        detectVerticalDragGestures(
+                            onDragEnd = {
+                                if (offsetY < -swipeThreshold) {
+                                    // User swiped up past threshold
+                                    onSwipeUp()
+                                }
+                                // Reset position
+                                offsetY = 0f
+                            },
+                            onVerticalDrag = { _, dragAmount ->
+                                // Only allow upward dragging (negative values)
+                                offsetY = (offsetY + dragAmount).coerceAtMost(0f)
+                            }
+                        )
+                    }.pointerInput(Unit) {
+                        detectTapGestures(
+                            onTap = { onClick() }
+                        )
+                    }
+                } else {
+                    Modifier.clickable { onClick() }
+                }
+            )
     ) {
         Icon(
             imageVector = icon,
